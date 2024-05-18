@@ -15,11 +15,11 @@
         android:id="@+id/navigation_dashboard"
         android:name="com.example.testtechniqueweblibbastien.ui.game.GameActivity"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_game" />
+        tools:layout="@layout/activity_game" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.testtechniqueweblibbastien.ui.notifications.NotificationsFragment"
+        android:name="com.example.testtechniqueweblibbastien.ui.parametre.ParametreActivity"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_parametre" />
 </navigation>

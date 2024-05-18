@@ -12,6 +12,10 @@
         android:theme="@style/Theme.TestTechniqueWeblibBastien"
         tools:targetApi="31" >
         <activity
+            android:name=".ui.game.GameActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name" >
@@ -21,6 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

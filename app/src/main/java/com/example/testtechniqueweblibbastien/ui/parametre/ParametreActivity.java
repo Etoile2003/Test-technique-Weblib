@@ -1,4 +1,4 @@
-package com.example.testtechniqueweblibbastien.ui.notifications;
+package com.example.testtechniqueweblibbastien.ui.parametre;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.testtechniqueweblibbastien.databinding.FragmentNotificationsBinding;
 
-public class NotificationsFragment extends Fragment {
+public class ParametreActivity extends Fragment {
 
 private FragmentNotificationsBinding binding;
 
