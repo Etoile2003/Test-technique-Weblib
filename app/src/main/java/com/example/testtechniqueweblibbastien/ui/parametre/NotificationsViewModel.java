@@ -1,4 +1,4 @@
-package com.example.testtechniqueweblibbastien.ui.notifications;
+package com.example.testtechniqueweblibbastien.ui.parametre;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

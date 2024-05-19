@@ -79,5 +79,26 @@ public enum Chord {
         return VALUES.get(RANDOM.nextInt(SIZE));
     }
 
+    public String getUpper(){
+        if(isFlat){
+            return "b";
+        }
+        if (isSharp){
+            return "#";
+        }
+        return "";
+    }
+
+    public String getLower(){
+        if(isMinor){
+            return "m";
+        }
+        return "";
+    }
+
+
+
+
+
 
 }
