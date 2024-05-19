@@ -1,29 +1,95 @@
 package com.example.testtechniqueweblibbastien.ui.parametre;
 
+import static com.example.testtechniqueweblibbastien.MainActivity.sharedPreferences;
+import static com.example.testtechniqueweblibbastien.MainActivity.editor;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import com.example.testtechniqueweblibbastien.databinding.FragmentNotificationsBinding;
+
+
+
+import com.example.testtechniqueweblibbastien.R;
+import com.example.testtechniqueweblibbastien.databinding.FragmentParametreBinding;
+import org.json.*;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import java.io.FileReader;
+import java.io.IOException;
 
 public class ParametreActivity extends Fragment {
 
-private FragmentNotificationsBinding binding;
+    public static RadioButton time5;
+    public static RadioButton time10;
+    public static RadioButton time15;
+
+    public RadioGroup timeGroup;
+
+
+    //public static int nbrSec = 5;
+
+private FragmentParametreBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
-        NotificationsViewModel notificationsViewModel =
-                new ViewModelProvider(this).get(NotificationsViewModel.class);
+        NotificationsViewModel notificationsViewModel = new ViewModelProvider(this).get(NotificationsViewModel.class);
 
-    binding = FragmentNotificationsBinding.inflate(inflater, container, false);
-    View root = binding.getRoot();
 
-        final TextView textView = binding.textNotifications;
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+
+
+        binding = FragmentParametreBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
+        timeGroup = root.findViewById(R.id.timeGroup);
+        time5 = root.findViewById(R.id.time5);
+        time10 = root.findViewById(R.id.time10);
+        time15 = root.findViewById(R.id.time15);
+
+        sharedPreferences = getActivity().getSharedPreferences("time", getActivity().MODE_WORLD_WRITEABLE);
+        editor = sharedPreferences.edit();
+
+        switch (sharedPreferences.getInt("time", 5)){
+            case 5:
+                time5.setChecked(true);
+                break;
+            case 10:
+                time10.setChecked(true);
+                break;
+            case 15:
+                time15.setChecked(true);
+                break;
+        }
+
+        timeGroup.setOnCheckedChangeListener((radioGroup, i) -> {
+        if (i == R.id.time5 ){
+
+            editor.putInt("time", 5);
+            editor.apply();
+        }
+        if (i == R.id.time10){
+
+            editor.putInt("time", 10);
+            editor.apply();
+        }
+        if(i == R.id.time15){
+                editor.putInt("time", 15);
+                editor.apply();
+        }
+    });
+
+    editor.commit();
+        //time5.toggle();
+        //time10.toggle();
+    //time5.toggle();
+
         return root;
     }
 

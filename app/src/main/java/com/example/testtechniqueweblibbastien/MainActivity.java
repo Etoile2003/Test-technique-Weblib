@@ -1,6 +1,7 @@
 package com.example.testtechniqueweblibbastien;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -16,8 +17,10 @@ import androidx.navigation.ui.NavigationUI;
 public class MainActivity extends AppCompatActivity {
 
 private ActivityMainBinding binding;
+public static SharedPreferences sharedPreferences;
+public static SharedPreferences.Editor editor;
 
-    public Button startButton ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,22 +28,16 @@ private ActivityMainBinding binding;
         //setContentView(R.layout.activity_main);
      binding = ActivityMainBinding.inflate(getLayoutInflater());
      setContentView(binding.getRoot());
-
+        sharedPreferences = getSharedPreferences("time", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_home,R.id.navigation_home , R.id.navigation_notifications)
-                .build();
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_home , R.id.navigation_parametre).build();
         NavController navController = Navigation.findNavController(this, R.id.mainPage);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
-        startButton = findViewById(R.id.start);
-        startButton.setOnClickListener(
-                view -> {
-                    Intent gameActivity = new Intent(MainActivity.this , GameActivity.class);
-                    startActivity(gameActivity);
-                }
-        );
+
     }
 
 
