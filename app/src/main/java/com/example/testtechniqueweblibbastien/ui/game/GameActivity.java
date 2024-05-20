@@ -1,5 +1,6 @@
 package com.example.testtechniqueweblibbastien.ui.game;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -36,9 +37,14 @@ public class GameActivity extends AppCompatActivity {
     public int nbrSec ;
     public TextView timer ;
 
+    public Button restart ;
+    public boolean stop = false;
+    public Handler handler ;
 
 
-    public void onCreate( Bundle savedInstanceState) {
+
+    @SuppressLint("MissingInflatedId")
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         System.out.println("starting game :>---------------------------------------------------------------");
         setContentView(R.layout.activity_game);
@@ -48,25 +54,8 @@ public class GameActivity extends AppCompatActivity {
         count = findViewById(R.id.ChordCount);
         quit =  findViewById(R.id.quit);
         timer = findViewById(R.id.Timer);
-        //nbrSec = ParametreActivity.nbrSec ;
+        restart = findViewById(R.id.restart);
 
-
-        /*try {
-            /*System.out.println("time 5 : "+ParametreActivity.time5.isActivated());
-            System.out.println("time 10 : "+ParametreActivity.time10.isActivated());
-            System.out.println("time 15 : "+ParametreActivity.time15.isActivated());
-            if(ParametreActivity.time5.isActivated()){
-                nbrSec=5;
-            }else if( ParametreActivity.time10.isActivated()){
-                nbrSec = 10 ;
-            }else if (ParametreActivity.time15.isActivated()){
-                nbrSec = 15;
-            }else {
-                nbrSec = 1 ;
-            }
-        }catch (Exception e){
-            nbrSec = 5;
-        }*/
 
         nbrSec = sharedPreferences.getInt("time", 5);
 
@@ -78,11 +67,28 @@ public class GameActivity extends AppCompatActivity {
             startActivity(i);
 
         });
+
+        restart.setOnClickListener(view -> {
+
+            handler.removeCallbacksAndMessages(null);
+
+
+            Game(0);
+        });
+
         Game(0);
     }
-    public void Game(int i)  {
-
-        Chord c = Chord.randomChord();
+    public void Game(int i)   {
+        Chord c  = null;
+        if (sharedPreferences.getBoolean("upper", false) == false && sharedPreferences.getBoolean("lower", false) == false){
+            c = Chord.randomNormalChord();
+        }else if (sharedPreferences.getBoolean("lower", false) && sharedPreferences.getBoolean("upper", false)== false) {
+            c = Chord.randomLowerChord();
+        }else if (sharedPreferences.getBoolean("upper", false) && sharedPreferences.getBoolean("lower", false)== false) {
+            c = Chord.randomUpperChord();
+        }else {
+            c = Chord.randomChord();
+        }
         displayChord(c);
         i++;
         count.setText(i+"/"+nbrNote);
@@ -91,12 +97,11 @@ public class GameActivity extends AppCompatActivity {
             waiting(i,0);
         }
     }
-
     public void waiting(int i,int j){
         int r = nbrSec-j;
         //System.out.println(r);
         timer.setText(Integer.toString(r));
-        Handler handler = new Handler();
+        handler = new Handler();
         if(j<nbrSec){
             j++;
             int finalj = j;
@@ -108,7 +113,38 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void displayChord(Chord c){
-            Note.setText(c.getValue());
+        System.out.println( "sahred value"+sharedPreferences.getBoolean("french", false));
+            if (sharedPreferences.getBoolean("french", false) == false) {
+                Note.setText(c.getValue());
+            }else {
+                System.out.println("in else");
+                switch (c.getValue()){
+                    case "A":
+                        Note.setText("La");
+                        break;
+                    case "B":
+                        Note.setText("Si");
+                        break;
+                    case "C":
+                        Note.setText("Do");
+                        break;
+                    case "D":
+                        Note.setText("Ré");
+                        break;
+                    case "E":
+                        Note.setText("Mi");
+                        break;
+                    case "F":
+                        Note.setText("Fa");
+                        break;
+                    case "G":
+                        Note.setText("Sol");
+                        break;
+                    default:
+                        System.out.println("default");
+                        Note.setText(c.getValue());
+                }
+            }
             Upper.setText(c.getUpper());
             Lower.setText(c.getLower());
     }
