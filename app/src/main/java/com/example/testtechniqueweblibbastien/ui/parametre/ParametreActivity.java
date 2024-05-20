@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Switch;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -34,6 +35,9 @@ public class ParametreActivity extends Fragment {
 
     public RadioGroup timeGroup;
 
+    public Switch upperSwitch;
+    public Switch lowerSwitch;
+    public Switch FrenchSwitch;
 
     //public static int nbrSec = 5;
 
@@ -52,9 +56,26 @@ private FragmentParametreBinding binding;
         time5 = root.findViewById(R.id.time5);
         time10 = root.findViewById(R.id.time10);
         time15 = root.findViewById(R.id.time15);
+        upperSwitch = root.findViewById(R.id.upperSwitch);
+        lowerSwitch = root.findViewById(R.id.lowerSwitch);
+        FrenchSwitch = root.findViewById(R.id.frenchSwitch);
 
-        sharedPreferences = getActivity().getSharedPreferences("time", getActivity().MODE_WORLD_WRITEABLE);
-        editor = sharedPreferences.edit();
+        upperSwitch.setChecked(sharedPreferences.getBoolean("upper", false));
+        lowerSwitch.setChecked(sharedPreferences.getBoolean("lower", false));
+        FrenchSwitch.setChecked(sharedPreferences.getBoolean("french", false));
+
+        upperSwitch.setOnCheckedChangeListener((compoundButton, b) -> {
+            editor.putBoolean("upper", b);
+            editor.apply();
+        });
+        lowerSwitch.setOnCheckedChangeListener((compoundButton, b) -> {
+            editor.putBoolean("lower", b);
+            editor.apply();
+        });
+        FrenchSwitch.setOnCheckedChangeListener((compoundButton, b) -> {
+            editor.putBoolean("french", b);
+            editor.apply();
+        });
 
         switch (sharedPreferences.getInt("time", 5)){
             case 5:

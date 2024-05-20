@@ -79,6 +79,34 @@ public enum Chord {
         return VALUES.get(RANDOM.nextInt(SIZE));
     }
 
+    //random normal chord
+    public static Chord randomNormalChord()  {
+        Chord c = VALUES.get(RANDOM.nextInt(SIZE));
+        while(c.isFlat() || c.isSharp() || c.isMinor()){
+            c = VALUES.get(RANDOM.nextInt(SIZE));
+        }
+        return c;
+    }
+
+    public static Chord randomLowerChord()  {
+        Chord c = VALUES.get(RANDOM.nextInt(SIZE));
+        while(c.isFlat() || c.isSharp() ){
+            c = VALUES.get(RANDOM.nextInt(SIZE));
+        }
+        return c;
+    }
+
+
+    public static Chord randomUpperChord()  {
+        Chord c = VALUES.get(RANDOM.nextInt(SIZE));
+        while(c.isMinor()){
+            c = VALUES.get(RANDOM.nextInt(SIZE));
+        }
+        return c;
+    }
+
+
+
     public String getUpper(){
         if(isFlat){
             return "b";
