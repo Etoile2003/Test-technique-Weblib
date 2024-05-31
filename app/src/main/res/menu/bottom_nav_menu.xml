@@ -9,6 +9,6 @@
     <item
         android:id="@+id/navigation_parametre"
         android:icon="@drawable/baseline_settings_24"
-        android:title="@string/title_notifications"/>
+        android:title="Parametre"/>
 
 </menu>
